@@ -3,18 +3,27 @@
 {% block title %}Hello DashboardController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/hugo_dev/Desktop/NationalParks/src/Controller/DashboardController.php'|file_link(0) }}">src/Controller/DashboardController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/hugo_dev/Desktop/NationalParks/templates/dashboard/index.html.twig'|file_link(0) }}">templates/dashboard/index.html.twig</a></code></li>
-    </ul>
+
+{% for park in pagination %}
+
+<div class="card mb-4">
+  <div class="card-header">
+    {{park.fullName}} - {{park.states}}
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{park.description}}</p>
+    <a href="{{park.url}}" class="btn btn-primary" target="_blank">Visiter</a>
+  </div>
 </div>
+    
+{% endfor %}
+
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(pagination, 'paginator/_page_searchbar.html.twig') }}
+</div>
+
+
 {% endblock %}
