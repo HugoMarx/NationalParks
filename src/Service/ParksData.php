@@ -2,17 +2,22 @@
 
 namespace App\Service;
 
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ParksData
 {
 
     private HttpClientInterface $client;
-    private string $auth_token = 'El1hqEu0lJbZg4QNSdnzJ4AbuxlzpbgkcJcAWTl7';
-
-    public function __construct(HttpClientInterface $client)
+    private ParameterBagInterface $params;
+    private string $auth_token;
+   
+    public function __construct(HttpClientInterface $client, ParameterBagInterface $params)
     {
         $this->client = $client;
+        $this->params = $params;
+        $this->auth_token = $this->params->get('nps_key');
+
     }
 
     public function fetchAllParksData()
@@ -32,6 +37,7 @@ class ParksData
     }
 
 public function fetchParksDatabyState(string $stateCode){
+
     $response = $this->client->request(
         'GET',
         'https://developer.nps.gov/api/v1/parks?stateCode='. strtolower($stateCode),
