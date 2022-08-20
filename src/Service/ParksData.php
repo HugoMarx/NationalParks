@@ -21,8 +21,7 @@ class ParksData
     }
 
     public function fetchAllParksData()
-    {
-        //NPS token : El1hqEu0lJbZg4QNSdnzJ4AbuxlzpbgkcJcAWTl7
+    {   
         $response = $this->client->request(
             'GET',
             'https://developer.nps.gov/api/v1/parks',
