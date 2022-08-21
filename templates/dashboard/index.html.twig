@@ -1,29 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block title %}Hello DashboardController!
+{% endblock %}
 
 {% block body %}
 
+	{{form_start(search_form)}}
+	<div class="d-flex align-items-center justify-content-end gap-2">
+		{{form_row(search_form.state_name)}}
+		<input class='btn btn-danger' type="submit" value="Search">
+	</div>
+	{{form_end(search_form)}}
 
+	<h2>{{currentState}}</h2>
+  <hr>
+	{% for park in pagination %}
 
-{% for park in pagination %}
+		<div class="card mb-4">
+			<div class="card-header">
+				{{park.fullName}}
+				-
+				{{park.states}}
+			</div>
+			<div class="card-body">
+				<p class="card-text">{{park.description}}</p>
+				<a href="{{park.url}}" class="btn btn-primary" target="_blank">Visiter</a>
+			</div>
+		</div>
 
-<div class="card mb-4">
-  <div class="card-header">
-    {{park.fullName}} - {{park.states}}
-  </div>
-  <div class="card-body">
-    <p class="card-text">{{park.description}}</p>
-    <a href="{{park.url}}" class="btn btn-primary" target="_blank">Visiter</a>
-  </div>
-</div>
-    
-{% endfor %}
+	{% endfor %}
 
-{# display navigation #}
-<div class="navigation">
-    {{ knp_pagination_render(pagination, 'paginator/_page_searchbar.html.twig') }}
-</div>
+	{# display navigation #}
+	<div class="navigation">
+		{{ knp_pagination_render(pagination, 'paginator/_page_searchbar.html.twig', {}, {
+   'align': 'center'}) }}
+	</div>
 
 
 {% endblock %}
