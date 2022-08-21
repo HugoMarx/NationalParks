@@ -20,7 +20,7 @@ class ParksData
 
     }
 
-    public function fetchAllParksData()
+    public function fetchAllParks() : array
     {   
         $response = $this->client->request(
             'GET',
@@ -35,7 +35,7 @@ class ParksData
        return $response->toArray();
     }
 
-public function fetchParksDatabyState(string $stateCode){
+public function fetchParksByState(string $stateCode = null): array {
 
     $response = $this->client->request(
         'GET',
