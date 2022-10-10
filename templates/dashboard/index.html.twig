@@ -8,12 +8,18 @@
 	{{form_start(search_form)}}
 	<div class="d-flex align-items-center justify-content-end gap-2">
 		{{form_row(search_form.state_name)}}
-		<input class='btn btn-danger' type="submit" value="Search">
+		<input id='searchBtn' class='btn btn-danger' type="submit" value="Search">
 	</div>
 	{{form_end(search_form)}}
 
+	<div class="d-flex justify-content-center">
+		<div id='spinner' class="spinner-border" role="status" style="">
+			<span class="visually-hidden">Loading...</span>
+		</div>
+	</div>
+
 	<h2>{{currentState}}</h2>
-  <hr>
+	<hr>
 	{% for park in pagination %}
 
 		<div class="card mb-4">
@@ -24,7 +30,7 @@
 			</div>
 			<div class="card-body">
 				<p class="card-text">{{park.description}}</p>
-				<a href="{{park.url}}" class="btn btn-primary" target="_blank">Visiter</a>
+				<a href="{{park.url}}" class="btn btn-dark btn-sm" target="_blank">Visit</a>
 			</div>
 		</div>
 
@@ -36,5 +42,32 @@
    'align': 'center'}) }}
 	</div>
 
+
+{% endblock %}
+
+{% block javascripts %}
+
+	{{ parent() }}
+
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+	<script type="text/javascript" defer>
+
+		let searchBtn = document.querySelector('#searchBtn');
+		let spinner = document.querySelector('#spinner');
+		console.log(searchBtn.href);
+
+		const instance = axios.create({
+  baseURL: 'https://developer.nps.gov/api/v1/parks/',
+  headers: {'X-Api-Key': 'El1hqEu0lJbZg4QNSdnzJ4AbuxlzpbgkcJcAWTl7'}
+});
+
+axios.get()
+			.then(function (response) { // en cas de réussite de la requête
+				console.log(response);
+			}).catch(function (error) { // en cas d’échec de la requête
+			console.log(error);
+			})
+	</script>
 
 {% endblock %}
